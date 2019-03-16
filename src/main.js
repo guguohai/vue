@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
-import { Button, Layout, Menu, Icon, Form, Input, Checkbox, Pagination, Table,Dropdown,Avatar,Row,Col } from 'ant-design-vue';
+import { Button, Layout, Menu, Icon, Form, Input, Checkbox, Pagination, Table, 
+    Dropdown, Avatar, Row, Col, Badge } from 'ant-design-vue';
 import axios from 'axios';
 import '@/mock'
 import { post, get } from './http'
@@ -17,6 +18,7 @@ Vue.use(Button);
 Vue.use(Layout);
 Vue.use(Dropdown);
 Vue.use(Avatar);
+Vue.use(Badge);
 Vue.use(Form);
 Vue.use(FormItem);
 Vue.use(Input);
@@ -33,8 +35,8 @@ Vue.use(Col);
 
 
 Vue.prototype.$axios = axios
-Vue.prototype.$get=get;
-Vue.prototype.$post=post;
+Vue.prototype.$get = get;
+Vue.prototype.$post = post;
 //Vue.prototype.$router=router;
 
 new Vue({

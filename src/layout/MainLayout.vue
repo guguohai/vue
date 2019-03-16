@@ -9,36 +9,37 @@
         >
         <h1>科技评价系统</h1>
       </div>
-      <a-menu theme="dark" :defaultSelectedKeys="['1']" mode="inline">
+      <a-menu theme="dark" :defaultSelectedKeys="['1']" mode="inline" id="menuBar">
         <a-menu-item key="1">
-          <a-icon type="pie-chart" />
-          <span><router-link to="/about">About</router-link></span>
+          <a-icon type="pie-chart"/>
+          <router-link to="/about">About</router-link>
         </a-menu-item>
         <a-menu-item key="2">
-          <a-icon type="desktop" />
-          <span><router-link to="/table">列表</router-link></span>
+          <a-icon type="desktop"/>
+          <router-link to="/table">列表</router-link>
         </a-menu-item>
-        <a-sub-menu
-          key="sub1"
-        >
-          <span slot="title"><a-icon type="user" /><span>User</span></span>
+        <a-sub-menu key="sub1">
+          <span slot="title">
+            <a-icon type="user"/>
+            <span>User</span>
+          </span>
           <a-menu-item key="3">Tom</a-menu-item>
           <a-menu-item key="4">Bill</a-menu-item>
           <a-menu-item key="5">Alex</a-menu-item>
         </a-sub-menu>
-        <a-sub-menu
-          key="sub2"
-        >
-          <span slot="title"><a-icon type="team" /><span>Team</span></span>
+        <a-sub-menu key="sub2">
+          <span slot="title">
+            <a-icon type="team"/>
+            <span>Team</span>
+          </span>
           <a-menu-item key="6">Team 1</a-menu-item>
           <a-menu-item key="8">Team 2</a-menu-item>
         </a-sub-menu>
         <a-menu-item key="9">
-          <a-icon type="file" />
+          <a-icon type="file"/>
           <span>File</span>
         </a-menu-item>
       </a-menu>
-
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0" id="layoutHeader">
@@ -50,19 +51,30 @@
               @click="()=> collapsed = !collapsed"
             />
           </a-col>
-          <a-col :span="15"></a-col>
-          <a-col :span="4">
-            <a-row>
-              <a-col :span="5">
+          <a-col :span="13"></a-col>
+          <a-col :span="6">
+            <ul id="headerMenu">
+              <li>
                 <router-link to="/home">
                   <a-icon type="home" style="font-size:16px;"/>
                 </router-link>
-              </a-col>
-              <a-col :span="5">
-                <a-icon type="search"/>
-              </a-col>
-              <a-col :span="14">
-                <a-dropdown style="vertical-align: initial;">
+              </li>
+              <li>
+                <a href="#">
+                  <a-icon type="setting"/>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <a-badge count="5" :offset="[5,-3]">
+                    <a-icon type="mail"/>
+                  </a-badge>
+                </a>
+              </li>
+              <li>
+                <a-dropdown
+                  style="vertical-align: initial;height:64px;padding:0 15px;display:block;"
+                >
                   <span style="cursor: pointer">
                     <a-avatar
                       class="avatar"
@@ -90,14 +102,12 @@
                     </a-menu-item>
                   </a-menu>
                 </a-dropdown>
-              </a-col>
-            </a-row>
+              </li>
+            </ul>
           </a-col>
         </a-row>
       </a-layout-header>
-      <a-layout-content
-        :style="{ margin: '24px 16px', padding: '24px', background: '#fff', height: '100%' }"
-      >
+      <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff' }">
         <router-view/>
       </a-layout-content>
     </a-layout>
@@ -110,6 +120,21 @@ export default {
       currUser: { name: "test" },
       collapsed: false
     };
+  },
+  watch: {
+    $route(to, from) {
+      const alinks = document
+        .getElementById("headerMenu")
+        .getElementsByTagName("li");
+      for (let k = 0; k < alinks.length; k++) {
+        const a = alinks[k].getElementsByTagName("a");
+        if (a && a[0]) {
+          const aa = a[0].baseURI;
+          console.log(aa);
+          // if (href === this.$route.path) {
+        }
+      }
+    }
   }
 };
 </script>
@@ -118,11 +143,62 @@ html,
 body {
   height: 100%;
 }
-#layoutHeader a:link{color:#333333;text-decoration: none;}
-#layoutHeader a:visited{color:#333333;text-decoration: none;}
-#layoutHeader a:hover{color:#1890ff;text-decoration: none;}
-#layoutHeader a:active{color:#333333;text-decoration: none;}
 
+#headerMenu {
+  margin: 0;
+  padding: 0 20px 0 0;
+  float: right;
+}
+#headerMenu li {
+  list-style: none;
+  float: left;
+}
+#headerMenu li a {
+  width: 100%;
+  display: inline-block;
+  height: 64px;
+  padding: 0 15px;
+}
+#headerMenu li a:link {
+  color: #333333;
+  text-decoration: none;
+  background: none;
+}
+#headerMenu li a:visited {
+  color: #333333;
+  text-decoration: none;
+  background: none;
+}
+#headerMenu li a:hover {
+  color: #1890ff;
+  text-decoration: none;
+  background-color: #f5f6f7;
+}
+#headerMenu li a:active {
+  color: #333333;
+  text-decoration: none;
+  background: none;
+}
+
+#menuBar li a:link {
+  color: #ffffff;
+  text-decoration: none;
+  background: none;
+}
+#menuBar li a:visited {
+  color: #ffffff;
+  text-decoration: none;
+  background: none;
+}
+#menuBar li a:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+#menuBar li a:active {
+  color: #ffffff;
+  text-decoration: none;
+  background: none;
+}
 #components-layout-demo-custom-trigger .trigger {
   font-size: 18px;
   line-height: 64px;
