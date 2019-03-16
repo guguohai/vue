@@ -1,0 +1,168 @@
+<template>
+  <a-layout id="components-layout-demo-custom-trigger" style="height:100%;">
+    <a-layout-sider :trigger="null" collapsible v-model="collapsed">
+      <div class="logo">
+        <img
+          alt="logo"
+          src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
+          height="30"
+        >
+        <h1>科技评价系统</h1>
+      </div>
+      <a-menu theme="dark" :defaultSelectedKeys="['1']" mode="inline">
+        <a-menu-item key="1">
+          <a-icon type="pie-chart" />
+          <span><router-link to="/about">About</router-link></span>
+        </a-menu-item>
+        <a-menu-item key="2">
+          <a-icon type="desktop" />
+          <span><router-link to="/table">列表</router-link></span>
+        </a-menu-item>
+        <a-sub-menu
+          key="sub1"
+        >
+          <span slot="title"><a-icon type="user" /><span>User</span></span>
+          <a-menu-item key="3">Tom</a-menu-item>
+          <a-menu-item key="4">Bill</a-menu-item>
+          <a-menu-item key="5">Alex</a-menu-item>
+        </a-sub-menu>
+        <a-sub-menu
+          key="sub2"
+        >
+          <span slot="title"><a-icon type="team" /><span>Team</span></span>
+          <a-menu-item key="6">Team 1</a-menu-item>
+          <a-menu-item key="8">Team 2</a-menu-item>
+        </a-sub-menu>
+        <a-menu-item key="9">
+          <a-icon type="file" />
+          <span>File</span>
+        </a-menu-item>
+      </a-menu>
+
+    </a-layout-sider>
+    <a-layout>
+      <a-layout-header style="background: #fff; padding: 0" id="layoutHeader">
+        <a-row>
+          <a-col :span="5">
+            <a-icon
+              class="trigger"
+              :type="collapsed ? 'menu-unfold' : 'menu-fold'"
+              @click="()=> collapsed = !collapsed"
+            />
+          </a-col>
+          <a-col :span="15"></a-col>
+          <a-col :span="4">
+            <a-row>
+              <a-col :span="5">
+                <router-link to="/home">
+                  <a-icon type="home" style="font-size:16px;"/>
+                </router-link>
+              </a-col>
+              <a-col :span="5">
+                <a-icon type="search"/>
+              </a-col>
+              <a-col :span="14">
+                <a-dropdown style="vertical-align: initial;">
+                  <span style="cursor: pointer">
+                    <a-avatar
+                      class="avatar"
+                      size="small"
+                      shape="circle"
+                      src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
+                    />
+                    <span>&nbsp;&nbsp;{{currUser.name}}</span>
+                  </span>
+                  <a-menu style="width: 150px" slot="overlay">
+                    <a-menu-item>
+                      <a-icon type="user"/>
+                      <span>个人中心</span>
+                    </a-menu-item>
+                    <a-menu-item>
+                      <a-icon type="setting"/>
+                      <span>设置</span>
+                    </a-menu-item>
+                    <a-menu-divider/>
+                    <a-menu-item>
+                      <router-link to="/login">
+                        <a-icon type="poweroff"/>
+                        <span>退出登录</span>
+                      </router-link>
+                    </a-menu-item>
+                  </a-menu>
+                </a-dropdown>
+              </a-col>
+            </a-row>
+          </a-col>
+        </a-row>
+      </a-layout-header>
+      <a-layout-content
+        :style="{ margin: '24px 16px', padding: '24px', background: '#fff', height: '100%' }"
+      >
+        <router-view/>
+      </a-layout-content>
+    </a-layout>
+  </a-layout>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      currUser: { name: "test" },
+      collapsed: false
+    };
+  }
+};
+</script>
+<style>
+html,
+body {
+  height: 100%;
+}
+#layoutHeader a:link{color:#333333;text-decoration: none;}
+#layoutHeader a:visited{color:#333333;text-decoration: none;}
+#layoutHeader a:hover{color:#1890ff;text-decoration: none;}
+#layoutHeader a:active{color:#333333;text-decoration: none;}
+
+#components-layout-demo-custom-trigger .trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+#components-layout-demo-custom-trigger .trigger:hover {
+  color: #1890ff;
+}
+
+#components-layout-demo-custom-trigger .logo {
+  height: 64px;
+  line-height: 64px;
+  color: #ffffff;
+  font-size: 20px;
+  text-align: center;
+  overflow: hidden;
+}
+
+#components-layout-demo-custom-trigger .logo img {
+  vertical-align: middle;
+  display: inline-block;
+  height: 32px;
+}
+#components-layout-demo-custom-trigger .logo h1 {
+  display: inline-block;
+  margin: 0 0 0 12px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 20px;
+  font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+  vertical-align: middle;
+}
+.ant-menu-item a {
+  width: 100%;
+  display: inline-block;
+}
+.router-link-active {
+  color: #ffffff;
+}
+</style>
