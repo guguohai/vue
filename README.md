@@ -3,6 +3,8 @@
 ## Project setup
 ```
 npm install
+npm install -g @vue/cli
+npm install -g @vue/cli-service-global
 ```
 
 ### Compiles and hot-reloads for development
@@ -24,6 +26,3 @@ npm run test
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
