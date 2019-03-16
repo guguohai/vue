@@ -1,5 +1,3 @@
-# vuescaffold
-
 ## Project setup
 ```
 npm install
