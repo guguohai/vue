@@ -277,6 +277,7 @@ body {
   font-size: 20px;
   text-align: center;
   overflow: hidden;
+  background: #002140;
 }
 
 #components-layout-demo-custom-trigger .logo img {
@@ -286,10 +287,10 @@ body {
 }
 #components-layout-demo-custom-trigger .logo h1 {
   display: inline-block;
-  margin: 0 0 0 12px;
+  margin: 0 0 0 8px;
   color: #fff;
-  font-weight: 600;
-  font-size: 20px;
+  font-weight: 500;
+  font-size: 19px;
   font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
   vertical-align: middle;
 }
