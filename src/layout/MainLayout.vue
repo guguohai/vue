@@ -53,11 +53,6 @@
               </li>
               <li>
                 <a href="#">
-                  <a-icon type="setting"/>
-                </a>
-              </li>
-              <li>
-                <a href="#">
                   <a-badge count="5" :offset="[5,-3]">
                     <a-icon type="bell"/>
                   </a-badge>
