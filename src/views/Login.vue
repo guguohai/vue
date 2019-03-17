@@ -36,7 +36,12 @@
         ]"
         >Remember me</a-checkbox>
         <a class="login-form-forgot" href>Forgot password</a>
-        <a-button type="primary" html-type="submit" :loading="logging" class="login-form-button">Log in</a-button>Or
+        <a-button
+          type="primary"
+          html-type="submit"
+          :loading="logging"
+          class="login-form-button"
+        >Log in</a-button>Or
         <a href="#">register now!</a>
         <span style="padding-left:20px;text-align:right;color:#ff0000">{{error}}</span>
       </a-form-item>
@@ -52,7 +57,7 @@ export default {
   },
   data() {
     return {
-      error: '',
+      error: "",
       logging: false
     };
   },
@@ -70,7 +75,8 @@ export default {
             this.logging = false;
             if (res.status == 200) {
               // const user = res.data.user;
-              console.log(res);
+              const user = JSON.stringify(res.data);
+              localStorage.setItem("user", user);
               router.push("/home");
               // this.$store.commit("account/setuser", user);
               // this.$message.success(result.message, 3);

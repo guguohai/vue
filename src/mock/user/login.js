@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
 
 const user = Mock.mock({
-    userName: '@ADMIN',
+    userName: 'admin',
     avatar: '@AVATAR',
     address: '@CITY',
     timefix: '@TIMEFIX',

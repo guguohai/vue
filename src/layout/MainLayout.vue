@@ -9,36 +9,28 @@
         >
         <h1>科技评价系统</h1>
       </div>
-      <a-menu theme="dark" :defaultSelectedKeys="['1']" mode="inline" id="menuBar">
-        <a-menu-item key="1">
-          <a-icon type="pie-chart"/>
-          <router-link to="/about">About</router-link>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <a-icon type="desktop"/>
-          <router-link to="/table">列表</router-link>
-        </a-menu-item>
-        <a-sub-menu key="sub1">
-          <span slot="title">
-            <a-icon type="user"/>
-            <span>User</span>
-          </span>
-          <a-menu-item key="3">Tom</a-menu-item>
-          <a-menu-item key="4">Bill</a-menu-item>
-          <a-menu-item key="5">Alex</a-menu-item>
-        </a-sub-menu>
-        <a-sub-menu key="sub2">
-          <span slot="title">
-            <a-icon type="team"/>
-            <span>Team</span>
-          </span>
-          <a-menu-item key="6">Team 1</a-menu-item>
-          <a-menu-item key="8">Team 2</a-menu-item>
-        </a-sub-menu>
-        <a-menu-item key="9">
-          <a-icon type="file"/>
-          <span>File</span>
-        </a-menu-item>
+      <a-menu
+        theme="dark"
+        :defaultSelectedKeys="menuSelectedKeys"
+        :defaultOpenKeys="menuOpenKeys"
+        mode="inline"
+        id="menuBar"
+      >
+        <template v-for="item in menus">
+          <a-menu-item :key="item.id" v-if="!item.children">
+            <a-icon :type="item.icon"/>
+            <span><router-link :to="item.url">{{item.name}}</router-link></span>
+          </a-menu-item>
+          <a-sub-menu :key="item.id" v-else>
+            <span slot="title">
+              <a-icon :type="item.icon"/>
+              <span>{{item.name}}</span>
+            </span>
+            <a-menu-item :key="s.id" v-for="s in item.children">
+              <router-link :to="s.url">{{s.name}}</router-link>
+            </a-menu-item>
+          </a-sub-menu>
+        </template>
       </a-menu>
     </a-layout-sider>
     <a-layout>
@@ -67,7 +59,7 @@
               <li>
                 <a href="#">
                   <a-badge count="5" :offset="[5,-3]">
-                    <a-icon type="mail"/>
+                    <a-icon type="bell"/>
                   </a-badge>
                 </a>
               </li>
@@ -82,23 +74,27 @@
                       shape="circle"
                       src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
                     />
-                    <span>&nbsp;&nbsp;{{currUser.name}}</span>
+                    <span>&nbsp;&nbsp;{{currUser.userName}}</span>
                   </span>
                   <a-menu style="width: 150px" slot="overlay">
                     <a-menu-item>
-                      <a-icon type="user"/>
-                      <span>个人中心</span>
+                      <router-link to="/account">
+                        <a-icon type="user"/>
+                        <span>个人中心</span>
+                      </router-link>
                     </a-menu-item>
                     <a-menu-item>
-                      <a-icon type="setting"/>
-                      <span>设置</span>
+                      <router-link to="/settings">
+                        <a-icon type="setting"/>
+                        <span>设置</span>
+                      </router-link>
                     </a-menu-item>
                     <a-menu-divider/>
                     <a-menu-item>
-                      <router-link to="/login">
+                      <a href="javascript:void(0)" v-on:click="logoff">
                         <a-icon type="poweroff"/>
                         <span>退出登录</span>
-                      </router-link>
+                      </a>
                     </a-menu-item>
                   </a-menu>
                 </a-dropdown>
@@ -117,24 +113,92 @@
 export default {
   data() {
     return {
-      currUser: { name: "test" },
-      collapsed: false
+      currUser: {},
+      collapsed: false,
+      menuSelectedKeys: [],
+      menuOpenKeys: [],
+      menus: [
+        {
+          id: "1",
+          name: "About",
+          icon: "desktop",
+          url: "/about",
+          children: null
+        },
+        {
+          id: "2",
+          name: "分类成果",
+          icon: "appstore",
+          url: "/table",
+          children: [
+            {
+              id: "2_1",
+              name: "科研项目课题",
+              icon: "",
+              url: "/table"
+            }
+          ]
+        },
+        {
+          id: "3",
+          name: "成果评价",
+          icon: "gift",
+          url: "",
+          children: [
+            {
+              id: "3_1",
+              name: "集团科技成果申报",
+              icon: "",
+              url: "/eval1"
+            },
+            {
+              id: "3_2",
+              name: "外部奖项申报",
+              icon: "",
+              url: "/eval2"
+            }
+          ]
+        }
+      ]
     };
   },
-  watch: {
-    $route(to, from) {
-      const alinks = document
-        .getElementById("headerMenu")
-        .getElementsByTagName("li");
-      for (let k = 0; k < alinks.length; k++) {
-        const a = alinks[k].getElementsByTagName("a");
-        if (a && a[0]) {
-          const aa = a[0].baseURI;
-          console.log(aa);
-          // if (href === this.$route.path) {
+  methods: {
+    logoff() {
+      localStorage.removeItem("user");
+      this.$router.push({
+        path: "/login"
+        // querry:{redirect:router.currentRoute}//从哪个页面跳转
+      });
+    }
+  },
+  created() {
+    const userStr = localStorage.getItem("user");
+    if (userStr) {
+      this.currUser = JSON.parse(userStr);
+    } else {
+      this.$router.push({
+        path: "/login"
+        // querry:{redirect:router.currentRoute}//从哪个页面跳转
+      });
+    }
+
+    this.menuSelectedKeys = [];
+    this.menus.forEach(m => {
+      if (m.children) {
+        m.children.forEach(c => {
+          if (this.$route.path === c.url) {
+            this.menuSelectedKeys.push(c.id);
+            if (this.menuOpenKeys.indexOf(m.id) === -1) {
+              this.menuOpenKeys.push(m.id);
+            }
+          }
+        });
+      } else {
+        if (this.$route.path === m.url) {
+          this.menuSelectedKeys.push(m.id);
         }
       }
-    }
+    });
   }
 };
 </script>
