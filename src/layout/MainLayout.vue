@@ -147,7 +147,7 @@ export default {
           children: [
             {
               id: "3_1",
-              name: "集团科技成果申报",
+              name: "科技成果申报",
               icon: "",
               url: "/eval1"
             },
