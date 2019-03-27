@@ -50,7 +50,7 @@ export default new Router({
                     name: 'table',
                     component: Table
                 }, {
-                    path: '/eval1',
+                    path: '/eval1/:id',
                     name: 'eval1',
                     component: Eval1
                 }, {

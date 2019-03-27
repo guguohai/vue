@@ -144,7 +144,7 @@ export default {
               id: "3_1",
               name: "科技成果申报",
               icon: "",
-              url: "/eval1"
+              url: "/eval1/123456"
             },
             {
               id: "3_2",

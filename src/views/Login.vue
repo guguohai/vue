@@ -67,12 +67,10 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           this.logging = true;
-          this.$post("/login", {
-            userName: values.userName,
-            password: values.password,
-            remember: values.remember
-          }).then(res => {
+          this.$post("/login", values).then(res => {
             this.logging = false;
+                console.log(res);
+
             if (res.status == 200) {
               // const user = res.data.user;
               const user = JSON.stringify(res.data);
